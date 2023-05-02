@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth'
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore'
 import IUser from '../models/user.modules';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class AuthService {
 
   // add dollar sign indictate a naming convention of an observable, it is optional but common among angular developers
   public isAuthenticated$ : Observable<boolean>
+  public isAuthenticatedWithDelay$ : Observable<boolean>
 
   constructor(
     private auth: AngularFireAuth, 
@@ -23,6 +24,10 @@ export class AuthService {
       this.usersCollection = db.collection('users')
       this.isAuthenticated$ = auth.user.pipe(
         map(user => !!user)
+      )
+
+      this.isAuthenticatedWithDelay$ = this.isAuthenticated$.pipe(
+        delay(1000)
       )
     }
 

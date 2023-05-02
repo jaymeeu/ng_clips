@@ -12,11 +12,9 @@ export class NavComponent implements OnInit {
   constructor (
     public modal : ModalService,
     public auth : AuthService
-    ){ }
+    ){}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   openModal($event : Event){
     $event.preventDefault()
